@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS prison_management_db CHARACTER SET utf8mb4;USE prison_management_db;
+CREATE TABLE users(id INT AUTO_INCREMENT PRIMARY KEY,full_name VARCHAR(100),username VARCHAR(50) UNIQUE,password VARCHAR(255));
+CREATE TABLE prisoners(id INT AUTO_INCREMENT PRIMARY KEY,prisoner_code VARCHAR(30) UNIQUE,full_name VARCHAR(120),date_of_birth DATE NULL,gender VARCHAR(20),address TEXT,admission_date DATE,status VARCHAR(30));
+CREATE TABLE cells(id INT AUTO_INCREMENT PRIMARY KEY,block_name VARCHAR(50),cell_number VARCHAR(30),capacity INT,status VARCHAR(30),UNIQUE(block_name,cell_number));
+CREATE TABLE visits(id INT AUTO_INCREMENT PRIMARY KEY,prisoner_id INT,visitor_name VARCHAR(120),relationship VARCHAR(60),phone VARCHAR(30),visit_date DATE,entry_time TIME,exit_time TIME NULL,status VARCHAR(30),FOREIGN KEY(prisoner_id) REFERENCES prisoners(id));
+CREATE TABLE cases(id INT AUTO_INCREMENT PRIMARY KEY,prisoner_id INT,case_number VARCHAR(50) UNIQUE,offense VARCHAR(180),court_name VARCHAR(150),sentence_start DATE,sentence_end DATE,status VARCHAR(30),FOREIGN KEY(prisoner_id) REFERENCES prisoners(id));
+CREATE TABLE releases(id INT AUTO_INCREMENT PRIMARY KEY,prisoner_id INT,expected_date DATE,actual_date DATE NULL,remarks TEXT,status VARCHAR(30),FOREIGN KEY(prisoner_id) REFERENCES prisoners(id));
+INSERT INTO users(full_name,username,password) VALUES('System Administrator','admin','$2b$12$rIruDqfcEEnPWVniHsHAjuxlXu5i.lwsoPo.FTIukCHbOfz.2EVEi');
+INSERT INTO prisoners(prisoner_code,full_name,date_of_birth,gender,address,admission_date,status) VALUES('P-001','Demo Person','1995-01-01','Male','Sample Address','2026-08-01','Active');
+INSERT INTO cells(block_name,cell_number,capacity,status) VALUES('A','A-101',4,'Available');

@@ -1,0 +1,1 @@
+<?php if(session_status()===PHP_SESSION_NONE)session_start();function token(){if(empty($_SESSION['token']))$_SESSION['token']=bin2hex(random_bytes(32));return $_SESSION['token'];}function check(){if($_SERVER['REQUEST_METHOD']==='POST'&&!hash_equals($_SESSION['token']??'',$_POST['token']??''))exit('Invalid request');} ?>
